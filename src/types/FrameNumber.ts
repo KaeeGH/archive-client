@@ -1,4 +1,4 @@
 export type FrameNumber = {
-  startFrame: number;
-  endFrame: number;
+    startFrame: number;
+    endFrame: number;
 };
