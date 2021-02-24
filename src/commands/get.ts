@@ -30,7 +30,7 @@ export default class get extends Command {
       const token = await (await Login(email, pass)).data
       this.log(`token: ${token}`)
     } catch (e) {
-      console.log(e)
+      console.log(e.response.statusText)
     }
   }
 }
