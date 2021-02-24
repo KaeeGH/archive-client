@@ -10,14 +10,19 @@ export function validateFrames(
     startFrame: number,
     endFrame: number,
     sensorId: string,
-    onReponse: (result: ValidatoinResult) => void
+    onReponse: (result: ValidatoinResult) => void,
+    token: string
 ): void {
     axios
-        .post(apiServerUrl + '/api/validate', {
-            firstFrame: startFrame,
-            lastFrame: endFrame,
-            sensorId: parseInt(sensorId)
-        })
+        .post(
+            apiServerUrl + '/api/validate',
+            {
+                firstFrame: startFrame,
+                lastFrame: endFrame,
+                sensorId: parseInt(sensorId)
+            },
+            { headers: { Authorization: `Bearer ${token}` } }
+        )
         .then(res => onReponse(res.data))
         .catch(err => console.log(err));
 }
