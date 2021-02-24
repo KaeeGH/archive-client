@@ -1,5 +1,6 @@
 import {Command, flags} from '@oclif/command'
 import { cli } from 'cli-ux'
+import { Login } from '../APIFuncs/login'
 
 export default class get extends Command {
   static description = 'describe the command here'
@@ -24,5 +25,12 @@ export default class get extends Command {
     const pass = await cli.prompt('password')
 
     this.log(`email: ${email}, password: ${pass}, camera: ${flags.camera}`)
+
+    try {
+      const token = await Login(email, pass)
+      this.log(`token: ${token}`)
+    } catch (e) {
+      console.log(e)
+    }
   }
 }
