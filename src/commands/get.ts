@@ -27,7 +27,7 @@ export default class get extends Command {
     this.log(`email: ${email}, password: ${pass}, camera: ${flags.camera}`)
 
     try {
-      const token = await Login(email, pass)
+      const token = await (await Login(email, pass)).data
       this.log(`token: ${token}`)
     } catch (e) {
       console.log(e)
