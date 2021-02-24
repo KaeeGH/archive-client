@@ -43,7 +43,7 @@ export default class get extends Command {
           this.log(`frame: ${result[0]}, result: ${result[1]}`)
         }
         const approvalTofetch = await cli.prompt('start fetching ? (y/n)')
-        let requestiterator = getFrame(firstFrame, lastFrame, flags.camera as string, token)
+        let requestiterator = getFrame(parseInt(firstFrame), parseInt(lastFrame), flags.camera as string, token)
         const BinaryArray: Array<ArrayBuffer> = []
         let frameindex: number
         frameindex = firstFrame
