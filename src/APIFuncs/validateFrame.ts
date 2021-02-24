@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { config } from 'process';
-import { apiServerUrl } from '../BaseData';
+import * as fs from 'fs';
 
 type ValidatoinResult = {
     validation_result: Array<[number, string]>;
@@ -13,6 +13,7 @@ export function validateFrames(
     onReponse: (result: ValidatoinResult) => void,
     token: string
 ): void {
+    const apiServerUrl = JSON.parse(fs.readFileSync('config.json', 'utf8')).apiServerUrl
     axios
         .post(
             apiServerUrl + '/api/validate',
