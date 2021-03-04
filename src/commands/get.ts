@@ -1,12 +1,12 @@
 import {Command, flags} from '@oclif/command'
-import { cli } from 'cli-ux'
+import { cli, IPromptOptions } from 'cli-ux'
 import { Login } from '../APIFuncs/login'
 import { validateFrames } from '../APIFuncs/validateFrame'
 import { getFrame } from '../APIFuncs/getFrame'
 import { writeBinaries } from '../utils/writeBinaries'
 
 export default class get extends Command {
-  static description = 'describe the command here'
+  static description = 'フレームデータを取得します'
 
   static examples = [
     `$ archive-client get`,
@@ -24,10 +24,7 @@ export default class get extends Command {
     const {args, flags} = this.parse(get)
 
     const email = await cli.prompt('email')
-
-    const pass = await cli.prompt('password')
-
-    this.log(`email: ${email}, password: ${pass}, camera: ${flags.camera}`)
+    const pass = await cli.prompt('password', {type: 'hide'})
 
     try {
       const token = await (await Login(email, pass)).data
@@ -36,7 +33,7 @@ export default class get extends Command {
 
       const firstFrame = await cli.prompt('first frame')
 
-      const lastFrame = await cli.prompt('last frame')
+      const lastFrame = await cli.prompt('last frame', {})
 
       validateFrames(firstFrame, lastFrame, flags.camera as string, async (res) => {
         for (const result of res.validation_result) {
@@ -46,7 +43,7 @@ export default class get extends Command {
         let requestiterator = getFrame(parseInt(firstFrame), parseInt(lastFrame), flags.camera as string, token)
         const BinaryArray: Array<ArrayBuffer> = []
         let frameindex: number
-        frameindex = firstFrame
+        frameindex = parseInt(firstFrame)
         if (approvalTofetch === 'y') {
           for (const request of requestiterator) {
             request
